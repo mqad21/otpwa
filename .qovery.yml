@@ -1,0 +1,15 @@
+---
+application:
+  name: "otp-wa"
+  project: "otpwa"
+  organization: "QoveryCommunity"
+databases:
+- type: "MYSQL"
+  name: "rumahwa"
+  version: "8.0"
+routers:
+- name: "main-otp-wa"
+  routes:
+  - application_name: "otp-wa"
+    paths:
+    - "/*"
