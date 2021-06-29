@@ -1,7 +1,9 @@
-import { MessageType } from "@adiwajshing/baileys";
+import baileys from "@adiwajshing/baileys";
 import { WA_STATUS } from "../commons/constants.js";
 import states from "../commons/states.js";
 import conn from "./wa_connection.js";
+
+const { MessageType } = baileys;
 
 const sendText = (id, text) => {
   return new Promise(async (resolve, reject) => {
