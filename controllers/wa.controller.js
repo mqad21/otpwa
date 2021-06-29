@@ -1,5 +1,5 @@
 import states from "../commons/states.js";
-import OTP from "../configs/OTP.js";
+import OTP from "../configs/otp.js";
 import conn from "../modules/wa_connection.js";
 import auth from "basic-auth";
 import express from "express";
