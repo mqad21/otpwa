@@ -1,7 +1,5 @@
-import socket from "socket.io";
+import { Server } from "socket.io";
 import { expressServer } from "../index.js";
-
-const { Server } = socket;
 
 let io;
 
