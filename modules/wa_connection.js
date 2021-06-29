@@ -1,8 +1,10 @@
-import { WAConnection, DisconnectReason } from "@adiwajshing/baileys";
+import baileys from "@adiwajshing/baileys";
 import fs from "fs";
 import { WA_STATUS } from "../commons/constants.js";
 import states from "../commons/states.js";
 import { io } from "./socket.js";
+
+const { WAConnection, DisconnectReason } = baileys
 
 let conn = new WAConnection();
 const tokenPath = "./auth_info.json";
