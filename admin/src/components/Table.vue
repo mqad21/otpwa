@@ -17,6 +17,9 @@
       <template #cell(verified_at)="data">
         <p>{{ data.item.verified_at | luxon }}</p>
       </template>
+      <template #cell(expired_at)="data">
+        <p>{{ data.item.expired_at | luxon }}</p>
+      </template>
     </b-table>
   </div>
 </template>

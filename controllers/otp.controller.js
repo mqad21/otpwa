@@ -1,19 +1,22 @@
 import Otp from "../models/otp.model.js";
 import sendOtp from "../modules/send_otp.js";
 import { io } from "../modules/socket.js";
+import OTP from "../configs/otp.js";
 
 const otpController = new Object();
 
 otpController.create = (req, res) => {
   if (!req.body) {
-    res.status(400).json({
+    return res.status(400).json({
       message: "Request body can not be empty.",
     });
   }
 
   const { number } = req.body;
   const created_at = new Date();
-  const otp = new Otp({ number, created_at });
+  const expired_at = new Date(created_at.getTime() + OTP.EXPIRED_TIME * 1000);
+  const otp = new Otp({ number, created_at, expired_at });
+
   Otp.create(otp, async (err, data) => {
     if (err) {
       res.status(500).json({
@@ -53,18 +56,24 @@ otpController.verify = (req, res) => {
   const targetOtp = new Otp({ number, otp });
   Otp.find(targetOtp, async (err, data) => {
     if (err) {
-      res.status(500).json({
+      return res.status(500).json({
         success: false,
         message: err.message || "Failed to find OTP.",
       });
     }
 
+    if (new Date(data.expired_at) < new Date() || data.verified_at) {
+      return res.status(400).json({
+        success: false,
+        message: "OTP is expired.",
+      });
+    }
+
     targetOtp.id = data.id;
-    console.log(data);
     targetOtp.verified_at = new Date();
     Otp.update(targetOtp, async (err, data) => {
       if (err) {
-        res.status(500).json({
+        return res.status(500).json({
           success: false,
           message: err.message || "Failed to update OTP verified at.",
         });
@@ -83,12 +92,12 @@ otpController.verify = (req, res) => {
 otpController.getAll = (req, res) => {
   Otp.findAll((err, data) => {
     if (err) {
-      res.status(500).json({
+      return res.status(500).json({
         success: false,
         message: err.message || "Failed to retrieve OTPs.",
       });
     }
-    res.json({
+    return res.json({
       success: true,
       message: "OTPs retrieved.",
       data,

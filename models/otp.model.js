@@ -8,6 +8,7 @@ const Otp = function (otp) {
     this.otp = otp.otp;
   }
   if (otp.created_at) this.created_at = otp.created_at;
+  if (otp.expired_at) this.expired_at = otp.expired_at;
   this.number = otp.number;
 };
 
