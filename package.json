@@ -15,10 +15,12 @@
         "@adiwajshing/baileys": "^3.5.1",
         "basic-auth": "^2.0.1",
         "cors": "^2.8.5",
+        "dotenv": "^10.0.0",
         "express": "^4.17.1",
         "fs": "0.0.1-security",
         "mysql": "^2.18.1",
         "netlify-lambda": "^2.0.10",
+        "nodemailer": "^6.6.3",
         "serve-index": "^1.9.1",
         "socket.io": "^4.1.2"
     },

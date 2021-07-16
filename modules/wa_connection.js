@@ -2,9 +2,10 @@ import baileys from "@adiwajshing/baileys";
 import fs from "fs";
 import { WA_STATUS } from "../commons/constants.js";
 import states from "../commons/states.js";
+import sendDisconnectMail from "./send_disconnect_mail.js";
 import { io } from "./socket.js";
 
-const { WAConnection, DisconnectReason } = baileys
+const { WAConnection, DisconnectReason } = baileys;
 
 let conn = new WAConnection();
 const tokenPath = "./auth_info.json";
@@ -23,21 +24,8 @@ conn.on("open", async () => {
 });
 
 conn.on("qr", (qr) => {
-  // console.log("AAA");
   states.connection.qrString = qr;
   io.emit("NEW_STATUS", states.connection);
-});
-
-conn.on("chats-received", async () => {
-  //   const messages = await conn.loadMessages("6282362243938@s.whatsapp.net", 1);
-  //   const firstMessage = messages.messages.map((item) => {
-  //     if (item.message.extendedTextMessage) {
-  //       return item.message.extendedTextMessage.text;
-  //     } else if (item.message.conversation) {
-  //       return item.message.conversation;
-  //     }
-  //     return item.messageStubType;
-  //   });
 });
 
 conn.on("close", ({ reason, isReconnecting }) => {
@@ -55,6 +43,7 @@ conn.on("close", ({ reason, isReconnecting }) => {
   }
 
   io.emit("NEW_STATUS", states.connection);
+  sendDisconnectMail(reason);
 });
 
 export default conn;
