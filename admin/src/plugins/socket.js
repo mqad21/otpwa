@@ -1,5 +1,4 @@
 import socket from "socket.io-client";
 
-const url = "http://localhost:3000";
-
+const url = "/";
 export default socket(url);
