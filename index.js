@@ -4,7 +4,6 @@ import routes from "./commons/routes.js";
 import conn from "./modules/wa_connection.js";
 import socket from "./modules/socket.js";
 import dotenv from "dotenv";
-import sendDisconnectmail from "./modules/send_disconnect_mail.js";
 
 const app = express();
 app.use(cors());
